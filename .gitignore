@@ -2,7 +2,7 @@
 .gradle/
 .idea/
 build/
-config/
+/config/
 data/
 logs/
 plugins/
