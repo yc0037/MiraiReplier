@@ -1,1 +1,3 @@
-grantedPermissionMap: {}
+grantedPermissionMap: 
+  '*:*': 
+    - console

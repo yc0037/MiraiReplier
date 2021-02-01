@@ -202,9 +202,10 @@ class Replier(private val file: File) {
     }
 
     class RegReplyItem(override val keyword: String): ReplyItem {
+        val logger = PluginMain.logger
         override val replies = ArrayList<String>()
         override fun check(word: String): Boolean {
-            return Regex(keyword).matches(word)
+            return Regex(keyword).containsMatchIn(word)
         }
         override fun addReply(r: String) {
             replies.add(r)
