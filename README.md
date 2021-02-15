@@ -1,11 +1,15 @@
 # Mirai Replier
-基于[Mirai](https://github.com/mamoe/mirai)开发的 QQ 关键词回复插件。
+基于 [Mirai](https://github.com/mamoe/mirai) 开发的 QQ 关键词回复插件。
 
 ## 更新
 
 ### 2021-01-31
 
 更新了 v0.1.0 版本。
+
+### 2021-02-15
+
+更新 v0.1.1 版本。
 
 ## 使用
 
@@ -91,6 +95,6 @@ Mirai Replier 的关键词回复配置文件为 `$root/config/MiraiReplier/Reply
 
 如果有多个关键词匹配，Mirai Replier 会选择配置文件中位置最靠前的一个。
 
-目前回复只支持纯文本（`PlainText`）。将来计划支持更多格式。
+目前回复只支持纯文本（`PLAIN`）。将来计划支持更多格式。
 
-如果在 Mirai Console 运行过程中更新外部配置文件，那么需要通过 `.mrsr load` 指令重新加载外部配置文件，否则修改不会生效。
+如果在运行过程中修改外部配置文件，那么需要通过 `.mrsr load` 指令重新加载外部配置文件，否则修改不会生效。
