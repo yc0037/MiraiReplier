@@ -32,7 +32,7 @@ object PluginMain : KotlinPlugin(
         "通过聊天窗口设置自动回复信息时，回复文本中不能包含空格。" +
         "如果有需要，请手动编辑config/MiraiReplier/Reply.json" +
         "然后通过【.mrsr load】指令加载配置\n" +
-        "更多帮助信息请参考https://github.com/yc0037/mirai-replyer\n" +
+        "更多帮助信息请参考https://github.com/yc0037/MiraiReplier\n" +
         "本插件目前正在测试阶段，如有问题请在GitHub上提Issue"
     val errorMessage =
         "指令格式错误！用法：.mrsr <keyword> <type> <reply1> <reply2> ...\n" +
@@ -81,7 +81,7 @@ object PluginMain : KotlinPlugin(
         manageChannel.subscribeAlways<FriendMessageEvent> { event ->
             val msg = event.message.contentToString()
             logger.info("Receive Message from ${subject.nick}: $msg")
-            if (".mrsr" == msg.substring(0, 5) || "。mrsr" == msg.substring(0, 5)) {
+            if (msg.length >= 5 && (".mrsr" == msg.substring(0, 5) || "。mrsr" == msg.substring(0, 5))) {
                 var args = msg.substring(5).trim().split(Regex("\\s+"))
                 args = args.filter { it -> it != "" }
                 if (args.isEmpty()) {
@@ -99,7 +99,7 @@ object PluginMain : KotlinPlugin(
                 else if (args.size < 3) {
                     subject.sendMessage(errorMessage)
                 } else {
-                    var type: ReplyType?
+                    val type: ReplyType?
                     if (args[1].toUpperCase() == "PLAIN") {
                         type = ReplyType.PLAIN
                     } else if (args[1].toUpperCase() == "REG") {
@@ -269,7 +269,8 @@ class Replier(private val file: File) {
     }
 
     private val logger = PluginMain.logger
-    private var replyMap = HashMap<String, ReplyItem>()
+    private var keywordList = ArrayList<String>()
+    private var replyMap = LinkedHashMap<String, ReplyItem>()
     private val moshi = Moshi.Builder()
         .add(ReplyItemJsonAdapter())
         .addLast(KotlinJsonAdapterFactory())
@@ -280,7 +281,7 @@ class Replier(private val file: File) {
         // 解析 config
         val type: Type = Types.newParameterizedType(Map::class.java, String::class.java, ReplyItem::class.java)
         val jsonAdapter: JsonAdapter<Map<String, ReplyItem>> = moshi.adapter(type)
-        replyMap = HashMap<String, ReplyItem>(jsonAdapter.fromJson(config)?.toMap())
+        replyMap = LinkedHashMap<String, ReplyItem>(jsonAdapter.fromJson(config)?.toMap())
     }
 }
 
