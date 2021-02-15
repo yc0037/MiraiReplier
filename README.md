@@ -89,6 +89,8 @@ Mirai Replier 的关键词回复配置文件为 `$root/config/MiraiReplier/Reply
 
 其中，键和 `keyword` 的值**必须相等**。`type` 属性规定关键词的匹配方式（大小写敏感，必须全为大写），可能的取值包括 `PLAIN`, `REG` 和 `CONTAINS`。`replies` 属性列出关键词触发后回复的文本。关键词触发后，Mirai Replier 将在 `replies` 数组中随机选择一项进行回复。
 
+如果有多个关键词匹配，Mirai Replier 会选择配置文件中位置最靠前的一个。
+
 目前回复只支持纯文本（`PlainText`）。将来计划支持更多格式。
 
 如果在 Mirai Console 运行过程中更新外部配置文件，那么需要通过 `.mrsr load` 指令重新加载外部配置文件，否则修改不会生效。
